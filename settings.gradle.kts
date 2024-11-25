@@ -21,3 +21,7 @@ dependencyResolutionManagement {
 
 rootProject.name = "Simple Notes"
 include(":app")
+include(":ui")
+include(":data")
+include(":domain")
+include(":core")
