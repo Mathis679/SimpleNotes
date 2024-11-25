@@ -1,6 +1,5 @@
-package com.mathislaurent.simplenotes.ui.theme
+package com.mathislaurent.ui.theme
 
-import android.app.Activity
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
