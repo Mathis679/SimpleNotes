@@ -4,6 +4,9 @@ import com.mathislaurent.core.di.IoDispatcher
 import com.mathislaurent.data.database.NoteDao
 import com.mathislaurent.data.model.NoteEntity
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
@@ -12,9 +15,13 @@ class NoteRepository @Inject constructor(
     @IoDispatcher private val dispatcher: CoroutineDispatcher
 ) {
 
-    suspend fun getAllNotes(): List<NoteEntity> = withContext(dispatcher) {
+    fun getAllNotes(): Flow<List<NoteEntity>> = flow<List<NoteEntity>> {
         noteDao.getAllNotes()
-    }
+    }.flowOn(dispatcher)
+
+    fun getNote(id: Int): Flow<NoteEntity?> = flow<NoteEntity?> {
+        noteDao.getNote(id)
+    }.flowOn(dispatcher)
 
     suspend fun insertNote(noteEntity: NoteEntity) = withContext(dispatcher) {
         noteDao.insertNote(noteEntity)

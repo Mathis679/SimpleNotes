@@ -9,3 +9,11 @@ sealed class Screens(val route: String) {
     data object NoteListScreenNavItem: Screens(NOTE_LIST_ROUTE)
     data object NoteDetailScreenNavItem: Screens(NOTE_DETAIL_ROUTE)
 }
+
+fun Screens.NoteDetailScreenNavItem.buildRoute(noteId: Int?): String {
+    return if (noteId != null) {
+        route.replace("{$NOTE_DETAIL_ID_PARAM}", noteId.toString())
+    } else {
+        route.replace("{$NOTE_DETAIL_ID_PARAM}", "")
+    }
+}

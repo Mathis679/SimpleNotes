@@ -20,7 +20,11 @@ fun MainNavigation() {
         composable(
             route = Screens.NoteListScreenNavItem.route
         ) {
-            NoteListScreen()
+            NoteListScreen(
+                goToNote = { note ->
+                    navController.navigate(Screens.NoteDetailScreenNavItem.buildRoute(note?.id))
+                }
+            )
         }
         composable(
             route = Screens.NoteDetailScreenNavItem.route,
