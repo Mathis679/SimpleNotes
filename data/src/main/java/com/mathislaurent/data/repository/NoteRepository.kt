@@ -15,12 +15,12 @@ class NoteRepository @Inject constructor(
     @IoDispatcher private val dispatcher: CoroutineDispatcher
 ) {
 
-    fun getAllNotes(): Flow<List<NoteEntity>> = flow<List<NoteEntity>> {
-        noteDao.getAllNotes()
+    fun getAllNotes(): Flow<List<NoteEntity>> = flow {
+        emit(noteDao.getAllNotes())
     }.flowOn(dispatcher)
 
-    fun getNote(id: Int): Flow<NoteEntity?> = flow<NoteEntity?> {
-        noteDao.getNote(id)
+    fun getNote(id: Int): Flow<NoteEntity?> = flow {
+        emit(noteDao.getNote(id))
     }.flowOn(dispatcher)
 
     suspend fun insertNote(noteEntity: NoteEntity) = withContext(dispatcher) {

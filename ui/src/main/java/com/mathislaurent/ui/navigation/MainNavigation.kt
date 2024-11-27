@@ -32,7 +32,11 @@ fun MainNavigation() {
                 type = NavType.IntType
             })
         ) {
-            NoteDetailScreen()
+            NoteDetailScreen(
+                goBack = {
+                    navController.navigate(Screens.NoteListScreenNavItem.route)
+                }
+            )
         }
     }
 }

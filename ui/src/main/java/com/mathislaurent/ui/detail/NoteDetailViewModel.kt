@@ -9,13 +9,16 @@ import com.mathislaurent.domain.usecase.GetNoteUseCase
 import com.mathislaurent.domain.usecase.UpdateNoteUseCase
 import com.mathislaurent.ui.navigation.NOTE_DETAIL_ID_PARAM
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import java.util.Date
+import java.util.Random
 import javax.inject.Inject
 
 @HiltViewModel
@@ -29,7 +32,7 @@ class NoteDetailViewModel @Inject constructor(
     private val noteId: Int? = savedStateHandle[NOTE_DETAIL_ID_PARAM]
 
     val uiState: StateFlow<DetailNoteUiState> =
-        if (noteId != null) {
+        if (noteId != null && noteId > -1) {
             getNoteUseCase(noteId).map {
                 if (it != null) {
                     DetailNoteUiState.Update(it)
@@ -39,13 +42,16 @@ class NoteDetailViewModel @Inject constructor(
             }
         } else {
             flow {
-                DetailNoteUiState.New
+                emit(DetailNoteUiState.New)
             }
         }.stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5_000),
             initialValue = DetailNoteUiState.New
         )
+
+    private val _returnToList = MutableStateFlow<Boolean>(false)
+    val returnToList: StateFlow<Boolean> = _returnToList
 
     sealed class DetailNoteUiState {
         data object New: DetailNoteUiState()
@@ -60,12 +66,15 @@ class NoteDetailViewModel @Inject constructor(
             createNoteUseCase(
                 Note(
                     id = 0,
-                    title = "New Title",
+                    title = "New Title ${Random().nextInt()}",
                     content = "",
                     color = 0x4287F5,
                     lastUpdateDate = Date()
                 )
             )
+            _returnToList.update {
+                true
+            }
         }
     }
 
@@ -73,12 +82,15 @@ class NoteDetailViewModel @Inject constructor(
         viewModelScope.launch {
             updateNoteUseCase(
                 note.copy(
-                    title = "Updated Title",
+                    title = "Updated Title ${Random().nextInt()}",
                     content = "",
                     color = 0xF59042,
                     lastUpdateDate = Date()
                 )
             )
+            _returnToList.update {
+                true
+            }
         }
     }
 }

@@ -23,7 +23,7 @@ fun NoteListScreen(
     val state = viewModel.uiState.collectAsStateWithLifecycle().value
 
     Surface(
-        modifier = Modifier.fillMaxSize().padding(24.dp)
+        modifier = Modifier.fillMaxSize().padding(56.dp)
     ) {
         LazyVerticalGrid(
             columns = GridCells.Fixed(2)

@@ -11,9 +11,5 @@ sealed class Screens(val route: String) {
 }
 
 fun Screens.NoteDetailScreenNavItem.buildRoute(noteId: Int?): String {
-    return if (noteId != null) {
-        route.replace("{$NOTE_DETAIL_ID_PARAM}", noteId.toString())
-    } else {
-        route.replace("{$NOTE_DETAIL_ID_PARAM}", "")
-    }
+    return route.replace("{$NOTE_DETAIL_ID_PARAM}", (noteId ?: -1).toString())
 }

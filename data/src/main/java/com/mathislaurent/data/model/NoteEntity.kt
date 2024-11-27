@@ -6,7 +6,7 @@ import java.util.Date
 
 @Entity(tableName = "notes")
 data class NoteEntity(
-    @PrimaryKey val id: Int,
+    @PrimaryKey(autoGenerate = true) var id: Int = 0,
     val title: String,
     val content: String,
     val color: Long,
