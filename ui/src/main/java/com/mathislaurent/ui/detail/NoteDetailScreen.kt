@@ -1,14 +1,7 @@
 package com.mathislaurent.ui.detail
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Button
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.flow.launchIn
@@ -29,22 +22,31 @@ fun NoteDetailScreen(
         }.launchIn(this)
     }
 
-    Box(modifier = Modifier.fillMaxSize().padding(56.dp)) {
-        when(state) {
-            NoteDetailViewModel.DetailNoteUiState.New -> {
-                Button(onClick = { viewModel.saveNewNote() }) {
-                    Text("Save New")
+    if (state != NoteDetailViewModel.DetailNoteUiState.Loading) {
+        NoteDetailContent(
+            state = state,
+            onSave = { title, content, color ->
+                when(state) {
+                    NoteDetailViewModel.DetailNoteUiState.New -> {
+                        viewModel.saveNewNote(
+                            title = title,
+                            content = content,
+                            color = color
+                        )
+                    }
+                    is NoteDetailViewModel.DetailNoteUiState.Update -> {
+                        viewModel.editNote(
+                            note = state.note,
+                            title = title,
+                            content = content,
+                            color = color
+                        )
+                    }
+                    else -> {
+                        // do nothing
+                    }
                 }
             }
-            is NoteDetailViewModel.DetailNoteUiState.Update -> {
-                Button(onClick = { viewModel.editNote(note = state.note) }) {
-                    Text("Save")
-                }
-            }
-            NoteDetailViewModel.DetailNoteUiState.NotFound -> {
-                Text("Note not found")
-            }
-        }
+        )
     }
-
 }

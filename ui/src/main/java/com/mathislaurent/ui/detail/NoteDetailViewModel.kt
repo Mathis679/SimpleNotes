@@ -18,7 +18,6 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import java.util.Date
-import java.util.Random
 import javax.inject.Inject
 
 @HiltViewModel
@@ -47,13 +46,14 @@ class NoteDetailViewModel @Inject constructor(
         }.stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5_000),
-            initialValue = DetailNoteUiState.New
+            initialValue = DetailNoteUiState.Loading
         )
 
     private val _returnToList = MutableStateFlow<Boolean>(false)
     val returnToList: StateFlow<Boolean> = _returnToList
 
     sealed class DetailNoteUiState {
+        data object Loading: DetailNoteUiState()
         data object New: DetailNoteUiState()
         data class Update(
             val note: Note
@@ -61,14 +61,14 @@ class NoteDetailViewModel @Inject constructor(
         data object NotFound: DetailNoteUiState()
     }
 
-    fun saveNewNote() {
+    fun saveNewNote(title: String, content: String, color: Long) {
         viewModelScope.launch {
             createNoteUseCase(
                 Note(
                     id = 0,
-                    title = "New Title ${Random().nextInt()}",
-                    content = "",
-                    color = 0x4287F5,
+                    title = title,
+                    content = content,
+                    color = color,
                     lastUpdateDate = Date()
                 )
             )
@@ -78,13 +78,13 @@ class NoteDetailViewModel @Inject constructor(
         }
     }
 
-    fun editNote(note: Note) {
+    fun editNote(note: Note, title: String, content: String, color: Long) {
         viewModelScope.launch {
             updateNoteUseCase(
                 note.copy(
-                    title = "Updated Title ${Random().nextInt()}",
-                    content = "",
-                    color = 0xF59042,
+                    title = title,
+                    content = content,
+                    color = color,
                     lastUpdateDate = Date()
                 )
             )
