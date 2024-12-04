@@ -36,12 +36,4 @@ class NoteListViewModel @Inject constructor(
             val noteList: List<Note>
         ): NoteListUiState()
     }
-
-    fun onNoteClicked(note: Note) {
-
-    }
-
-    fun onNewNoteClicked() {
-
-    }
 }
