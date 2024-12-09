@@ -247,3 +247,20 @@ val customColorDarkHighContrast = Color(0xFFFBFAFF)
 val onCustomColorDarkHighContrast = Color(0xFF000000)
 val customColorContainerDarkHighContrast = Color(0xFFABCDFF)
 val onCustomColorContainerDarkHighContrast = Color(0xFF000000)
+
+// Default colors note
+const val DEFAULT_CARD_PURPLE = 0xFFE4DFF9
+const val DEFAULT_CARD_RED = 0xFFFFBAB1
+const val DEFAULT_CARD_YELLOW = 0xFFF5F5BE
+const val DEFAULT_CARD_BLUE = 0xFFB4EEF5
+const val DEFAULT_CARD_GREEN = 0xFFB1F5B7
+const val DEFAULT_CARD_ORANGE = 0xFFF4D2BB
+
+enum class DefaultCardColor(val color: Long) {
+    PURPLE(DEFAULT_CARD_PURPLE),
+    RED(DEFAULT_CARD_RED),
+    YELLOW(DEFAULT_CARD_YELLOW),
+    BLUE(DEFAULT_CARD_BLUE),
+    GREEN(DEFAULT_CARD_GREEN),
+    ORANGE(DEFAULT_CARD_ORANGE)
+}

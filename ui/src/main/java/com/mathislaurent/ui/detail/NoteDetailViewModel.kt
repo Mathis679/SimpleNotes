@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mathislaurent.domain.model.Note
 import com.mathislaurent.domain.usecase.CreateNoteUseCase
+import com.mathislaurent.domain.usecase.DeleteNoteUseCase
 import com.mathislaurent.domain.usecase.GetNoteUseCase
 import com.mathislaurent.domain.usecase.UpdateNoteUseCase
 import com.mathislaurent.ui.navigation.NOTE_DETAIL_ID_PARAM
@@ -24,6 +25,7 @@ import javax.inject.Inject
 class NoteDetailViewModel @Inject constructor(
     private val createNoteUseCase: CreateNoteUseCase,
     private val updateNoteUseCase: UpdateNoteUseCase,
+    private val deleteNoteUseCase: DeleteNoteUseCase,
     getNoteUseCase: GetNoteUseCase,
     savedStateHandle: SavedStateHandle,
 ): ViewModel() {
@@ -88,6 +90,15 @@ class NoteDetailViewModel @Inject constructor(
                     lastUpdateDate = Date()
                 )
             )
+            _returnToList.update {
+                true
+            }
+        }
+    }
+
+    fun deleteNote(note: Note) {
+        viewModelScope.launch {
+            deleteNoteUseCase(note)
             _returnToList.update {
                 true
             }

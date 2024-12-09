@@ -46,6 +46,19 @@ fun NoteDetailScreen(
                         // do nothing
                     }
                 }
+            },
+            onDelete = {
+                when(state) {
+                    NoteDetailViewModel.DetailNoteUiState.New -> {
+                        goBack()
+                    }
+                    is NoteDetailViewModel.DetailNoteUiState.Update -> {
+                        viewModel.deleteNote(state.note)
+                    }
+                    else -> {
+                        // do nothing
+                    }
+                }
             }
         )
     }
