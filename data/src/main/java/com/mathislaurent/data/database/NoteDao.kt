@@ -16,6 +16,9 @@ interface NoteDao {
     @Query("SELECT * FROM notes WHERE id = :id")
     suspend fun getNote(id: Int): NoteEntity?
 
+    @Query("SELECT * FROM notes ORDER BY lastUpdateDate DESC LIMIT 1")
+    suspend fun getLastNote(): NoteEntity?
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertNote(noteEntity: NoteEntity)
 

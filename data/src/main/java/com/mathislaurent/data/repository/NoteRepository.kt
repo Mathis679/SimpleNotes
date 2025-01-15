@@ -23,6 +23,10 @@ class NoteRepository @Inject constructor(
         emit(noteDao.getNote(id))
     }.flowOn(dispatcher)
 
+    suspend fun getLastNote(): NoteEntity? = withContext(dispatcher) {
+        noteDao.getLastNote()
+    }
+
     suspend fun insertNote(noteEntity: NoteEntity) = withContext(dispatcher) {
         noteDao.insertNote(noteEntity)
     }
