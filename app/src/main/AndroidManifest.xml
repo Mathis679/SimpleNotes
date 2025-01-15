@@ -17,7 +17,8 @@
             android:name="com.mathislaurent.ui.MainActivity"
             android:exported="true"
             android:label="@string/app_name"
-            android:theme="@style/Theme.SimpleNotes">
+            android:theme="@style/Theme.SimpleNotes"
+            android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
