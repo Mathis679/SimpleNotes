@@ -8,6 +8,7 @@ import androidx.glance.appwidget.provideContent
 import androidx.glance.currentState
 import androidx.glance.state.GlanceStateDefinition
 import androidx.glance.state.PreferencesGlanceStateDefinition
+import com.mathislaurent.ui.theme.DefaultCardColor
 
 class SimpleNotesWidget: GlanceAppWidget() {
 
@@ -16,8 +17,14 @@ class SimpleNotesWidget: GlanceAppWidget() {
     override suspend fun provideGlance(context: Context, id: GlanceId) {
         provideContent {
             val prefs = currentState<Preferences>()
-            val lastTitle = prefs[SimpleNotesWidgetReceiver.lastNotePref]
-            SimpleNotesWidgetContent(lastTitle ?: "No pref")
+            val lastTitle = prefs[SimpleNotesWidgetReceiver.lastNoteTitlePref]
+            val lastContent = prefs[SimpleNotesWidgetReceiver.lastNoteContentPref]
+            val lastColor = prefs[SimpleNotesWidgetReceiver.lastNoteColorPref]
+            SimpleNotesWidgetContent(
+                title = lastTitle ?: "No pref",
+                content = lastContent ?: "No pref",
+                color = lastColor ?: DefaultCardColor.PURPLE.color
+            )
         }
     }
 }
