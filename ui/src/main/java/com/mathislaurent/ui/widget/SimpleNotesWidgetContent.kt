@@ -30,7 +30,7 @@ fun SimpleNotesWidgetContent(
         modifier = GlanceModifier
             .fillMaxSize()
             .clickable(onClick = actionStartActivity<MainActivity>())
-            .background(Color(color))
+            .background(Color(color).copy(alpha = 0.75f))
             .padding(16.dp),
         verticalAlignment = Alignment.Top,
         horizontalAlignment = Alignment.CenterHorizontally,
